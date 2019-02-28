@@ -30,7 +30,8 @@ public class FetchScheduler extends Scheduler {
                         new KuaiDailiFetcher(8),
                         new Www66IPFetcher(8),
                         new XichiDailiFetcher(8),
-                        new GoubanjiaFetcher(8)
+                        new GoubanjiaFetcher(8),
+                        new YunDLFetcher(8)
                 );
 
 
