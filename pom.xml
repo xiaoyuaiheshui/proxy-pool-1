@@ -91,10 +91,12 @@
             <artifactId>jackson-mapper-asl</artifactId>
             <version>${jackson-mapper.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+        <!-- https://mvnrepository.com/artifact/commons-httpclient/commons-httpclient -->
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.5</version>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
         </dependency>
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>

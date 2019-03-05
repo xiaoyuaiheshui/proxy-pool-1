@@ -6,17 +6,12 @@ import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpOptions;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.hibernate.validator.internal.util.privilegedactions.GetMethod;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.OptionsMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpMethod;
 
 import java.io.IOException;
 import java.net.*;
@@ -29,7 +24,7 @@ public class ProxyUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(ProxyUtil.class);
 
-    private static final String VERIFY_URL = "https://myip.kkcha.com/";
+    private static final String VERIFY_URL = "https://api.rez.gg/graphql?o=getStreams";
 
     public static boolean verifyProxy(ProxyEntity proxy) {
         logger.info("proxy" + proxy);
@@ -61,16 +56,11 @@ public class ProxyUtil {
         boolean useful;
         HttpURLConnection connection = null;
         try {
-            URL url = new URL(VERIFY_URL);
-            InetSocketAddress addr = new InetSocketAddress(ip, port);
-            Proxy proxy = new Proxy(Proxy.Type.HTTP, addr);
-            OkHttpClient.Builder builder = new OkHttpClient.Builder();
             HttpClient client=new HttpClient();
-            client.getHostConfiguration().setHost("111432.1.32.93", 80, "http");
-            HttpMethod method =new GetMethod("http://www.07073.com/gld/");
+            client.getHostConfiguration().setHost(ip, port, "http");
+            HttpMethod method =new OptionsMethod(VERIFY_URL);
             int statusCode = client.executeMethod(method);
-            int rCode =execute.code();
-                useful = rCode == 200;
+                useful = statusCode == 200;
         } catch (Exception  e1) {
             logger.warn(String.format("verify proxy %s:%d exception: " + e1.getMessage(), ip, port));
             useful = false;
