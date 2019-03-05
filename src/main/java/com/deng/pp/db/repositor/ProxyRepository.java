@@ -3,9 +3,14 @@ package com.deng.pp.db.repositor;
 import com.deng.pp.db.config.RedisConfiguration;
 import com.deng.pp.entity.ProxyEntity;
 import com.google.common.base.Strings;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import javax.sound.midi.Soundbank;
 import java.util.*;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by hcdeng on 17-7-3.
@@ -39,7 +44,12 @@ public  class ProxyRepository {
 
     public ProxyEntity getRandomly(){
         String key = redisTemplate.randomKey();
-        return Strings.isNullOrEmpty(key) ? null : getByKey(key);
+        if (key!=null){
+            String ip = key.substring(0,1);
+            Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+            return  pattern.matcher(ip).matches()? getByKey(key):null;
+        }
+        return null;
     }
 
     public List<ProxyEntity> getList(int num){
